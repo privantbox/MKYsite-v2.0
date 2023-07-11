@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cutemky</title>
+<link type="image/x-icon" rel="icon" href="../MKY表情包/啃得鸡（AFC）.png">
+    <style>
+        #image-viewer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #image-viewer img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease-in-out;
+        }
+        #toolbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+        #toolbar button {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="image-viewer">
+        <img id="image" src="../MKY表情包/63.jpg">
+    </div>
+    <div id="toolbar">
+        <button onclick="zoomIn()"><img src="../MKY表情包/必要图片/放大.png" width="25" height="27" alt=""/></button>
+        <button onclick="zoomOut()"><img src="../MKY表情包/必要图片/缩小.png" width="30" height="30" alt=""/></button>
+        <button onclick="rotateClockwise()"><img src="../MKY表情包/必要图片/顺时针旋转.png" width="30" height="27"></button>
+        <button onclick="rotateCounterClockwise()"><img src="../MKY表情包/必要图片/逆时针旋转.png" width="30" height="28" alt=""/></button>
+        <button onclick="goToHomePage()">返回主页</button>
+    </div>
+
+    <script>
+        var image = document.getElementById('image');
+        var rotation = 0;
+
+        function zoomIn() {
+            var currentScale = parseFloat(image.style.transform.replace('scale(', '').replace(')', '')) || 1;
+            var newScale = Math.min(currentScale + 0.1, 1.5);
+            image.style.transform = `scale(${newScale}) rotate(${rotation}deg)`;
+        }
+
+        function zoomOut() {
+            var currentScale = parseFloat(image.style.transform.replace('scale(', '').replace(')', '')) || 1;
+            var newScale = Math.max(currentScale - 0.1, 0.5);
+            image.style.transform = `scale(${newScale}) rotate(${rotation}deg)`;
+        }
+
+        function rotateClockwise() {
+            rotation += 90;
+            image.style.transform = `scale(${getScale()}) rotate(${rotation}deg)`;
+        }
+
+        function rotateCounterClockwise() {
+            rotation -= 90;
+            image.style.transform = `scale(${getScale()}) rotate(${rotation}deg)`;
+        }
+
+        function goToHomePage() {
+          window.location.href="../../index.html";
+
+        }
+
+        function getScale() {
+            var currentScale = parseFloat(image.style.transform.replace('scale(', '').replace(')', '')) || 1;
+            return Math.max(currentScale, 1);
+        }
+    </script>
+</body>
+</html>
